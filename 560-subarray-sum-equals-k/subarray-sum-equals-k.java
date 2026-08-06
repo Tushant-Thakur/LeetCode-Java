@@ -1,19 +1,19 @@
 class Solution {
     public int subarraySum(int[] nums, int k) {
-        int count = 0;
+        HashMap<Integer, Integer> subNum = new HashMap<>();
+        subNum.put(0, 1);
+        int total = 0, count = 0;
 
-        for (int start = 0; start < nums.length; start++) {
-            int sum = 0;
+        for (int n : nums) {
+            total += n;
 
-            for (int end = start; end < nums.length; end++) {
-                sum += nums[end];
-
-                if (sum == k) {
-                    count++;
-                }
+            if (subNum.containsKey(total - k)) {
+                count += subNum.get(total - k);
             }
+
+            subNum.put(total, subNum.getOrDefault(total, 0) + 1);
         }
 
-        return count;
+        return count;        
     }
 }
